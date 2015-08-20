@@ -1,3 +1,5 @@
 {
-	"openOutList": [".psd", ".lnk", ".zip"]
+	"openOutList": [".psd", ".lnk", ".zip"],
+	"maxSearchTime": 3000,
+	"hideMessageDialog": false
 }

@@ -5,11 +5,13 @@ import re
 import threading
 
 SETTINGS_FILE = 'quickOpen.sublime-settings'
+openOutList = sublime.load_settings(SETTINGS_FILE).get('openOutList')
+maxSearchTime = sublime.load_settings(SETTINGS_FILE).get('maxSearchTime')
+hideMessageDialog = sublime.load_settings(SETTINGS_FILE).get('hideMessageDialog')
 
 class quickOpenCommand(sublime_plugin.TextCommand):
 	# 超过一定时间直接禁用
 	def run(self, edit=None, url=None):
-
 		work = ThreadQuickOpen(self)
 		work.start()
 
@@ -27,13 +29,12 @@ class ThreadQuickOpen(threading.Thread):
 	def __init__(self, orignal):
 		self.orignal = orignal
 		self.killed = False
-		sublime.set_timeout(lambda: kill(self), 3000)
+		sublime.set_timeout(lambda: kill(self), maxSearchTime)
 		threading.Thread.__init__(self)
 	def run(self):
 		orignal = self.orignal
 		files = []
 		pathList = []
-		openOutList = sublime.load_settings(SETTINGS_FILE).get('openOutList')
 		quickOpenHistory = []
 
 		project_data = orignal.view.window().project_data()
@@ -96,7 +97,7 @@ class ThreadCompletePath(threading.Thread):
 	def __init__(self, orignal):
 		self.orignal = orignal
 		self.killed = False
-		sublime.set_timeout(lambda: kill(self), 3000)
+		sublime.set_timeout(lambda: kill(self), maxSearchTime)
 		threading.Thread.__init__(self)
 	def run(self):
 		pathList = []
@@ -135,7 +136,10 @@ def getFolderFiles(path, orignal, type = None, filetypes = None):
 	excludefolders = r'|'.join([x for x in settings.get('folder_exclude_patterns')]) or r'$.'
 	for root, dirs, files in os.walk(path):
 		if orignal.killed:
-			sublime.message_dialog(path + ': has  too many files, can\'t completely lsit!!')
+			if not hideMessageDialog:
+				sublime.message_dialog(path + ': has  too many files, can\'t completely lsit!!')
+			else:
+				sublime.log_commands(path + ': has  too many files, can\'t completely lsit!!')
 			orignal.killed = False
 			break
 
@@ -183,7 +187,6 @@ def prettifyPath(pathList):
 	return panelShow
 
 def kill(orignal):
-	print(1)
 	if orignal.killed == True:
 		return
 	orignal.killed = True
