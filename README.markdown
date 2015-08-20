@@ -20,3 +20,21 @@ QuickOpen can open file or directory with system default way
 ---&&---  
 -| if time is out and search is not complete, will show a alert window, you can hide it  
 -> "hideMessageDialog": true  
+
+
+## 常用功能  
+-| 在explorer中打开文件夹  
+-| 用默认的软件打开相关文件  
+-> 比如 .psd 用 photoshop 打开  
+-> 你可以自己在quickOpen.sublime-settings设置需要文件类型  
+-> "openOutList": [".psd", ".lnk", ".zip", "..."]  
+
+-| 在 show_quick_panel 中, 选择文件自动补全  
+
+## 常见问题  
+-| 文件夹文件过多, 查找需要时间  
+-> 你可以设置 最大搜索时间 maxSearchTime  
+-> 如果是3s 就设置为 "maxSearchTime": 3000  
+---&&---  
+-| 同时超过时间还没有搜索完, 会弹出一个提示框你可以选择去掉  
+-> "hideMessageDialog": true  
