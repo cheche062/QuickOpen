@@ -29,7 +29,7 @@ QuickOpen can open file or directory with system default way
 -> 你可以自己在quickOpen.sublime-settings设置需要文件类型  
 -> "openOutList": [".psd", ".lnk", ".zip", "..."]  
 
--| 在 show_quick_panel 中, 选择文件自动补全  
+-| 在 show_quick_panel 中, 自动补全文件地址  
 
 ## 常见问题  
 -| 文件夹文件过多, 查找需要时间  
