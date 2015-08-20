@@ -10,12 +10,11 @@ QuickOpen can open file or directory with system default way
 -> 你可以自己在quickOpen.sublime-settings设置需要文件类型  
 -> "openOutList": [".psd", ".lnk", ".zip", "..."]  
 
--| 在 show_quick_panel 选择文件自动补全  
-
+-| 在 show_quick_panel 中, 选择文件自动补全  
 
 ## 常见问题  
 -| 文件夹文件过多, 查找需要时间  
--> 你可以设置 maxSearchTime  
+-> 你可以设置 最大搜索时间 maxSearchTime  
 -> 如果是3s 就设置为 "maxSearchTime": 3000  
 ---&&---  
 -| 同时超过时间还没有搜索完, 会弹出一个提示框你可以选择去掉  
