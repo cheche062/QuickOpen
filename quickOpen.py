@@ -5,9 +5,9 @@ import re
 import threading
 
 SETTINGS_FILE = 'quickOpen.sublime-settings'
-openOutList = sublime.load_settings(SETTINGS_FILE).get('openOutList')
-maxSearchTime = sublime.load_settings(SETTINGS_FILE).get('maxSearchTime')
-hideMessageDialog = sublime.load_settings(SETTINGS_FILE).get('hideMessageDialog')
+maxSearchTime = 0
+hideMessageDialog = False
+openOutList = []
 
 class quickOpenCommand(sublime_plugin.TextCommand):
 	# 超过一定时间直接禁用
@@ -27,10 +27,12 @@ class completePath(sublime_plugin.TextCommand):
 class ThreadQuickOpen(threading.Thread):
 	orignal = None
 	def __init__(self, orignal):
+		initParameter()
 		self.orignal = orignal
 		self.killed = False
 		sublime.set_timeout(lambda: kill(self), maxSearchTime)
 		threading.Thread.__init__(self)
+
 	def run(self):
 		orignal = self.orignal
 		files = []
@@ -95,8 +97,10 @@ class ThreadQuickOpen(threading.Thread):
 class ThreadCompletePath(threading.Thread):
 	orignal = None
 	def __init__(self, orignal):
+		initParameter()
 		self.orignal = orignal
 		self.killed = False
+		global maxSearchTime
 		sublime.set_timeout(lambda: kill(self), maxSearchTime)
 		threading.Thread.__init__(self)
 	def run(self):
@@ -190,3 +194,9 @@ def kill(orignal):
 	if orignal.killed == True:
 		return
 	orignal.killed = True
+
+def initParameter():
+	global openOutList, maxSearchTime, hideMessageDialog
+	maxSearchTime = sublime.load_settings(SETTINGS_FILE).get('maxSearchTime')
+	hideMessageDialog = sublime.load_settings(SETTINGS_FILE).get('hideMessageDialog')
+	openOutList = sublime.load_settings(SETTINGS_FILE).get('openOutList')
