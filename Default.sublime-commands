@@ -1,0 +1,8 @@
+[
+    {   "caption": "quick open",
+        "command": "quick_open"
+    },
+    {   "caption": "complete path",
+        "command": "complete_path"
+    }
+]

@@ -1,0 +1,4 @@
+[
+	{ "keys": ["alt+a"], "command": "quick_open"},
+	{ "keys": ["alt+space"], "command": "complete_path"}
+]
